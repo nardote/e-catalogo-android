@@ -97,7 +97,7 @@ public class Detalles extends Activity {
     @Override
     public void onCreate(Bundle	savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.detalles);
         
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 

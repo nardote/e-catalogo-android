@@ -133,6 +133,9 @@ public class MainActivity extends Activity {
                 Iterator i = set.iterator();
 
                 int time = 0;
+                
+               
+                
                 //recorro todos los items
                 while(i.hasNext()){
                 	
@@ -141,17 +144,22 @@ public class MainActivity extends Activity {
                   
                   	// el item seleccionado no tiene animacion
               	 	if(position != (Integer) me.getKey()) {
-              	 	
+              	 		
+              	 	 
+		                
               	 	  //genero hilo para definirle la animacion a cada item
 		              new Handler().postDelayed(new Runnable()
 		              {
 		              	 @Override
 		              	 public void run()
 		              	 {
-		              	  
-		              	 Animation hyperspaceJump = AnimationUtils.loadAnimation(MainActivity.this, R.anim.flyin);
-		                  hyperspaceJump.setFillAfter(true);
-		              	 ((View) im.getItem((Integer)me.getKey())).startAnimation(hyperspaceJump);
+		              		 final Animation hyperspaceJump;
+		           	 		 hyperspaceJump = AnimationUtils.loadAnimation(MainActivity.this, R.anim.flyin);
+		                     hyperspaceJump.setFillAfter(true);
+		                     hyperspaceJump.setRepeatCount(-1);
+		                     hyperspaceJump.setRepeatMode(2);
+		              	 
+		                     ((View) im.getItem((Integer)me.getKey())).startAnimation(hyperspaceJump);
 		              	}
 		              }, time);
 		              
@@ -159,18 +167,22 @@ public class MainActivity extends Activity {
               	 	}
                 }
                 	
-                
+                //espero para emitir el intent
                 new Handler().postDelayed(new Runnable()
 	              {
 	              	 @Override
 	              	 public void run()
 	              	 {
-	              	  
-	              		Intent intent = new Intent(MainActivity.this, Detalles.class);
+	              		 
 	                    
+	                    
+	                    Intent intent = new Intent(MainActivity.this, Detalles.class);
+	              		
 	                    startActivity(intent);
+	                    
 	              	}
-	              }, 500);
+	              }, 1000);
+                
                 
                 //Toast.makeText(MainActivity.this, "" + position, Toast.LENGTH_SHORT).show();
             		
@@ -324,6 +336,31 @@ public class MainActivity extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_main, menu);
         return true;
+    }
+    
+    @Override
+    public void onStop() {
+    	
+    	
+    	Set set = im.getImagenViews().entrySet();
+
+        Iterator i = set.iterator();
+
+       
+        
+        //recorro todos los items
+        while(i.hasNext()){
+        	
+          final Map.Entry me = (Map.Entry)i.next();
+              	 
+          ((View) im.getItem((Integer)me.getKey())).clearAnimation();
+            
+             
+        }
+    	
+        super.onStop();
+		
+    	
     }
     
     
